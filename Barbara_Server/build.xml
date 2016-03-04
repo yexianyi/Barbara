@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Barbara_Client" default="jar">
+
+    
+    <property name="build.dir" value="build"/>
+    <property name="build.lib.dir" value="${build.dir}"/>
+    
+    <property name="project.dir" value="."/>
+    
+    <property name="project.src.dir" value="src"/>
+    
+    <property name="project.classes.dir" value="classes"/>
+    
+    <property name="build.project.classes.dir" value="${build.dir}/project_classes"/>
+    
+    <property name="project.lib.dir" value="."/>
+    
+    
+    <path id="classpath">
+        <fileset dir="${build.lib.dir}" includes="**/*.jar"/>
+        <pathelement location="${project.classes.dir}"/>
+    </path>
+
+
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="copy" depends="clean">
+        <mkdir dir="${build.lib.dir}"/>
+        <copy todir="${build.lib.dir}">
+            <fileset dir="${project.lib.dir}"/>
+        </copy>
+    </target>
+    
+    <target name="compile" depends="copy">
+        <mkdir dir="${project.classes.dir}"/>
+        <javac  debug="true"
+                debuglevel="lines,vars,source"
+                srcdir="${project.src.dir}" destdir="${project.classes.dir}" classpathref="classpath"/>
+        <copy todir="${build.project.classes.dir}">
+            <fileset dir="${project.classes.dir}" excludes="/.data/**"/>
+        </copy>
+    </target>
+    
+    
+    <target name="jar" depends="compile">
+        
+        <jar destfile="${build.dir}/BarbaraTestServer.jar" basedir="${build.project.classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="com.barbara.test.server.main.ServerMain"/>
+                <attribute name="Class-Path" value="${manifest.classpath}" />  
+            </manifest>
+        	
+        	<zipfileset excludes="META-INF/*.SF" src="${project.lib.dir}/jettison-1.3.1.jar"/>
+        </jar>
+        
+    	<copy todir="${build.dir}">
+            <fileset dir="${project.dir}" includes="**/*.properties,**/*.xml,**/*.cvs, keystore" excludes="build.xml"/>
+        </copy>
+    	
+    	<delete includeEmptyDirs="true">
+            <fileset dir="${build.dir}" excludes="BarbaraTestServer.jar"/>
+        </delete>
+    </target>
+    
+  
+    
+</project>
+
