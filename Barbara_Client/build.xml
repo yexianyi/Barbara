@@ -49,7 +49,7 @@
         
         <jar destfile="${build.dir}/BarbaraTestClient.jar" basedir="${build.project.classes.dir}">
             <manifest>
-                <attribute name="Main-Class" value="com.barbara.test.client.main.ClientMain"/>
+                <attribute name="Main-Class" value="com.yxy.barbara.test.client.main.ClientMain"/>
                 <attribute name="Class-Path" value="${manifest.classpath}" />  
             </manifest>
         	
