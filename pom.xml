@@ -75,6 +75,6 @@
 	</build>
 	<modules>
 		<module>barbara_server</module>
-		<module>barbara_client</module>
+		<module>barbar_client</module>
 	</modules>
 </project>
